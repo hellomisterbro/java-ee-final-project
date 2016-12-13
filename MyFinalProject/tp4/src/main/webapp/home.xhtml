@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <b:jumbotron>
+                <b:container>
+                    <h1>Hello #{sessionData.loggedUser.username}, begin your trip!</h1>
+                    <b:commandButton value="Create a new ride" look="info" action="#{rideCrudBean.startNewEntity}"
+                                     oncomplete="$('.modalPseudoClass').modal();return false;" size="lg">
+                        <f:ajax execute="@form" render="@form"/>
+                    </b:commandButton>
+                </b:container>
+            </b:jumbotron>
+        </h:form>
+        <b:modal id="amodal" title="Creating a new ride" styleClass="modalPseudoClass">
+            <p>Here you can update you infromation</p>
+            <b:panel>
+                    <h:form>
+                    <b:row>
+                        <b:column medium-screen="4">
+                            <h:outputText value="Enter your start location:" for="startlocation"/>
+                        </b:column>
+                        <b:column medium-screen="6">
+                            <b:inputText placeholder="Location start#{rideCrudBean.entity==null}#{rideCrudBean==null}"
+                                         id="startlocation" value="#{rideCrudBean.entity.startLocation}"
+                                         ajax="true" autocomplete="false" update="@(.message)">
+                            </b:inputText>
+                        </b:column>
+                        <b:column medium-screen="6" style-class="message">
+                            <b:message for="startlocation"/>
+                        </b:column>
+                    </b:row>
+                    <b:row>
+                        <b:column medium-screen="4">
+                            <h:outputText value="Enter your end location:" for="places"/>
+                        </b:column>
+                        <b:column medium-screen="6">
+                            <b:inputText placeholder="Location end" id="places"
+                                         value="#{rideCrudBean.entity.endLocation}"
+                                         ajax="true" autocomplete="false" update="@(.message)">
+                            </b:inputText>
+                        </b:column>
+                        <b:column medium-screen="6" style-class="message">
+                            <b:message for="places"/>
+                        </b:column>
+                    </b:row>
+                    <b:row>
+                        <b:column medium-screen="4">
+                            <h:outputText value="Price:"/>
+                        </b:column>
+                        <b:column medium-screen="6">
+                            <b:inputText placeholder="Price" id="price" value="#{rideCrudBean.entity.price}"
+                                         ajax="true" autocomplete="false" update="@(.message)">
+                            </b:inputText>
+                        </b:column>
+                    </b:row>
+                    <b:row>
+                        <b:column medium-screen="4">
+                            <h:outputText value="Time:"/>
+                        </b:column>
+                        <b:column medium-screen="6">
+
+                            <b:dateTimePicker
+                                    render-label="true"/>
+                        </b:column>
+
+                    </b:row>
+                    <b:row>
+                        <b:column span="4" offset="5">
+                            <!--action=""-->
+
+                            <b:commandButton value="Update" action="#{rideCrudBean.doSaveEdit}"
+                                             look="primary"
+                                             style="width:100%"><f:ajax execute="@form" render="@form"/></b:commandButton>
+
+                        </b:column>
+                    </b:row>
+
+            </h:form>
+                </b:panel>
+
+        </b:modal>
+
+        <h:form>
+            <h:commandLink value="Make a login" action="/login.jsf?faces-redirect=true"
+                           rendered="#{not sessionData.loggedIn}"/>
+            <h:panelGrid columns="1" rendered="#{sessionData.loggedIn}">
+                <h:outputLabel value="Hello #{sessionData.loggedUser.username}, you are logged in :-)"/>
+                <h:commandLink value="make your comments" action="/userCommentCrud?faces-redirect=true"/>
+                <h:commandLink value="make your bookmarks" action="/userBookmarkCrud?faces-redirect=true"/>
+            </h:panelGrid>
+        </h:form>
+
+        <b:container>
+            <b:tabView activeIndex="0">
+                <b:tab title="Created">
+                    <p>Here you can see rides created by you.</p>
+                    <b:panel title="Moscow to Lviv, at 20:12 on 23.09.2014" collapsible="false">
+                        <b:row styleClass="show-grid">
+                            <b:column span="2"><h:outputText value="Car:"/></b:column>
+                            <b:column span="8"><h:outputText value="Toyota"/></b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column span="2"><h:outputText value="Passegers:"/></b:column>
+                            <b:column span="8"><h:outputText value="Nikita, tolik, bolik"/></b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column span="2"><h:outputText value="Free Places:"/></b:column>
+                            <b:column span="8"><h:outputText value="2 of 5"/></b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column span="3" offset="11"><b:button look="danger" value="Cancel"/></b:column>
+                        </b:row>
+                    </b:panel>
+                </b:tab>
+                <b:tab title="Joined">
+                    <p>Here you can see rides you joined.</p>
+                    <b:panel title="Moscow to Lviv, at 20:12 on 23.09.2014" collapsible="false">
+                        <b:row styleClass="show-grid">
+                            <b:column span="2"><h:outputText value="Car:"/></b:column>
+                            <b:column span="8"><h:outputText value="Toyota"/></b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column span="2"><h:outputText value="Passegers:"/></b:column>
+                            <b:column span="8"><h:outputText value="Nikita, tolik, bolik"/></b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column span="2"><h:outputText value="Free Places:"/></b:column>
+                            <b:column span="8"><h:outputText value="2 of 5"/></b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column span="3" offset="11"><b:button look="danger" value="Cancel"/></b:column>
+                        </b:row>
+                    </b:panel>
+                </b:tab>
+            </b:tabView>
+        </b:container>
+    </ui:define>
+</ui:composition>
+</html>

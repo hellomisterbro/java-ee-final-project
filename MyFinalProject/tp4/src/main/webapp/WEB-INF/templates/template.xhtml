@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>
+        <ui:insert name="title">Some title</ui:insert>
+    </title>
+</h:head>
+<h:form>
+<b:navBar brand="CarSharingSystem" brandHref="#">
+    <b:navbarLinks>
+        <b:navLink value="Home" href="home.jsf"></b:navLink>
+        <b:navLink value="Search" href="#"></b:navLink>
+        <b:navLink value="Settings" href="settings.jsf"></b:navLink>
+        <b:navCommandLink value="Logout" action="#{loginAction.logout}"/>
+
+    </b:navbarLinks>
+</b:navBar>
+</h:form>
+<h:body>
+    <ui:insert name="content" />
+</h:body>
+</html>

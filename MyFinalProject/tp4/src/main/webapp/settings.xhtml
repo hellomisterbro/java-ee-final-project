@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+    <ui:define name="content">
+        <b:container>
+            <!--<f:facet name="footer">-->
+                <h:form id="loginForm">
+                    <b:panel>
+                        <b:row>
+                            <b:column medium-screen="2">
+                                <h:outputText value="Car:" for="carname" />
+                            </b:column>
+                            <b:column medium-screen="6">
+                                <b:inputText placeholder="Car name" id="carname" value="#{loginModel.username}"
+                                             ajax="true" autocomplete="false" update="@(.message)">
+                                </b:inputText>
+                            </b:column>
+                            <b:column medium-screen="6" style-class="message">
+                                <b:message for="carname" />
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column medium-screen="2">
+                                <h:outputText value="Places in car:" for="places" />
+                            </b:column>
+                            <b:column medium-screen="6">
+                                <b:inputText placeholder="Places in car" id="places" value="#{loginModel.username}"
+                                             ajax="true" autocomplete="false" update="@(.message)">
+                                </b:inputText>
+                            </b:column>
+                            <b:column medium-screen="6" style-class="message">
+                                <b:message for="carname" />
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column medium-screen="2">
+                                <h:outputText value="Password:" />
+                            </b:column>
+                            <b:column medium-screen="6">
+                                <b:inputSecret placeholder="Password" id="password" value="#{loginModel.password}"
+                                               ajax="true" autocomplete="false" update="@(.message)">
+                                </b:inputSecret>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column span="4" offset="2">
+                                <b:commandButton value="Update" action="#{loginAction.login()}" update="@form" look="primary"
+                                                 style="width:100%" />
+                            </b:column>
+                        </b:row>
+                    </b:panel>
+                </h:form>
+            <!--</f:facet>-->
+        </b:container>
+    </ui:define>
+</ui:composition>
+</html>
