@@ -2,8 +2,7 @@ package lu.uni2016.finalproject.ejb.entity;
 
 import lu.uni2016.finalproject.ejb.entity.helper.AbstractDBObject;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
  * Created by kirichek on 12/10/16.

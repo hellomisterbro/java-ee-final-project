@@ -22,17 +22,12 @@ public class Ride extends AbstractDBObject{
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "time")
-    private java.util.Date getDateTime() { return dateTime; }
-
-    public void setDateTime(Date dateTime) { this.dateTime = dateTime; }
-
-    @Column(name = "driver")
-    public User getDriver() {
-        return driver;
+    public Date getDateTime() {
+        return dateTime;
     }
 
-    public void setDriver(User driver) {
-        this.driver = driver;
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 
     @Column(name = "places")
@@ -53,6 +48,16 @@ public class Ride extends AbstractDBObject{
         this.price = price;
     }
 
+
+    @OneToOne
+    @JoinColumn(name = "driver_id")
+    User getDriver(){
+        return driver;
+    }
+
+    public void setDriver(User driver) {
+        this.driver = driver;
+    }
 
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     public List<User> getPassengers() {

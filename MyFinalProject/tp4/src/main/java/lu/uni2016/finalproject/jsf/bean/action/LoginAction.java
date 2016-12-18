@@ -44,12 +44,6 @@ public class LoginAction {
 
     public String logout() {
         sessionData.setLoggedUser(null);
-//        String uri = "/login.xhtml";
-//        try {
-//            FacesContext.getCurrentInstance().getExternalContext().dispatch(uri);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         return "/login.xhtml?faces-redirect=true";
     }
 

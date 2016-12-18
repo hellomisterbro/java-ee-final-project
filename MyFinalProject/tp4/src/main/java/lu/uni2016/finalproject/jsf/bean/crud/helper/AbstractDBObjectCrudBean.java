@@ -42,6 +42,7 @@ public abstract class AbstractDBObjectCrudBean<T extends AbstractDBObject> imple
     public String doSaveEdit() {
         entity = (T) getFacade().saveOrUpdate(entity);
         endConversation();
+        startNewEntity();
         return null;
     }
 
