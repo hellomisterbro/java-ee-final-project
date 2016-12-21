@@ -28,7 +28,7 @@
                             <h:outputText value="Enter your start location:" for="startlocation"/>
                         </b:column>
                         <b:column medium-screen="6">
-                            <b:inputText placeholder="Location start#{rideCrudBean.entity==null}#{rideCrudBean==null}"
+                            <b:inputText placeholder="Location start"
                                          id="startlocation" value="#{rideCrudBean.entity.startLocation}"
                                          ajax="true" autocomplete="false" update="@(.message)">
                             </b:inputText>
@@ -108,16 +108,6 @@
             </b:panel>
 
         </b:modal>
-
-        <h:form>
-            <h:commandLink value="Make a login" action="/login.jsf?faces-redirect=true"
-                           rendered="#{not sessionData.loggedIn}"/>
-            <h:panelGrid columns="1" rendered="#{sessionData.loggedIn}">
-                <h:outputLabel value="Hello #{sessionData.loggedUser.username}, you are logged in :-)"/>
-                <h:commandLink value="make your comments" action="/userCommentCrud?faces-redirect=true"/>
-                <h:commandLink value="make your bookmarks" action="/userBookmarkCrud?faces-redirect=true"/>
-            </h:panelGrid>
-        </h:form>
 
         <b:container>
             <b:tabView activeIndex="0">

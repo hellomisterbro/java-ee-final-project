@@ -17,7 +17,7 @@
                                 <h:outputText value="Car:" for="carname" />
                             </b:column>
                             <b:column medium-screen="6">
-                                <b:inputText placeholder="Car name" id="carname" value="#{loginModel.username}"
+                                <b:inputText placeholder="Car name" id="carname" value="#{updateInfoModel.car.carname}"
                                              ajax="true" autocomplete="false" update="@(.message)">
                                 </b:inputText>
                             </b:column>
@@ -30,7 +30,7 @@
                                 <h:outputText value="Places in car:" for="places" />
                             </b:column>
                             <b:column medium-screen="6">
-                                <b:inputText placeholder="Places in car" id="places" value="#{loginModel.username}"
+                                <b:inputText placeholder="Places in car" id="places" value="#{updateInfoModel.car.places}"
                                              ajax="true" autocomplete="false" update="@(.message)">
                                 </b:inputText>
                             </b:column>
@@ -43,21 +43,23 @@
                                 <h:outputText value="Password:" />
                             </b:column>
                             <b:column medium-screen="6">
-                                <b:inputSecret placeholder="Password" id="password" value="#{loginModel.password}"
+                                <b:inputSecret placeholder="Password" id="password" value="#{updateInfoModel.password}"
                                                ajax="true" autocomplete="false" update="@(.message)">
                                 </b:inputSecret>
                             </b:column>
                         </b:row>
                         <b:row>
                             <b:column span="4" offset="2">
-                                <b:commandButton value="Update" action="#{loginAction.login()}" update="@form" look="primary"
+                                <b:commandButton value="Update" action="#{updateInfoAction.update}" update="@form" look="primary"
                                                  style="width:100%" />
                             </b:column>
                         </b:row>
+                        <f:event type="preRenderView" listener="#{updateInfoAction.beginEditing}"/>
                     </b:panel>
                 </h:form>
             <!--</f:facet>-->
         </b:container>
+
     </ui:define>
 </ui:composition>
 </html>

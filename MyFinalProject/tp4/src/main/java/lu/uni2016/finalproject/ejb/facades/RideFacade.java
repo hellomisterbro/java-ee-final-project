@@ -15,11 +15,19 @@ import javax.inject.Named;
 @Stateless
 public class RideFacade extends AbstractDBObjectFacade {
 
-    List<Ride> getJoinedRidesByUser(){
+   public List<Ride> getJoinedRidesByUser(){
         return em.createQuery("").getResultList();
     }
 
-    List<Ride> getCreatedRidesByUser(){
+    public List<Ride> getCreatedRidesByUser(){
         return em.createQuery("").getResultList();
+    }
+
+    public List<Ride> getAllRides(){
+        return em.createQuery("select r from Ride r where r.deleted is null").getResultList();
+    }
+
+    public List<Ride> getRidesByLocationPoints(String start, String end){
+        return em.createQuery("select r from Ride r WHERE (r.startLocation = '"+start+"' AND r.endLocation = '"+end+"')").getResultList();
     }
 }

@@ -51,7 +51,7 @@ public class Ride extends AbstractDBObject{
 
     @OneToOne
     @JoinColumn(name = "driver_id")
-    User getDriver(){
+    public User getDriver(){
         return driver;
     }
 
@@ -59,14 +59,14 @@ public class Ride extends AbstractDBObject{
         this.driver = driver;
     }
 
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    public List<User> getPassengers() {
-        return passengers;
-    }
-
-    public void setPassengers(List<User> passengers) {
-        this.passengers = passengers;
-    }
+//    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+//    public List<User> getPassengers() {
+//        return passengers;
+//    }
+//
+//    public void setPassengers(List<User> passengers) {
+//        this.passengers = passengers;
+//    }
 
     @Column(name = "startlocation")
     public String getStartLocation() {

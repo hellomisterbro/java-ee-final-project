@@ -53,6 +53,6 @@ public class RideCrudBean extends AbstractDBObjectCrudBean<Ride>{
     @PostConstruct
     void init(){
         super.startNewEntity();
-        super.entity.setPassengers(new ArrayList<User>());
+//        super.entity.setPassengers(new ArrayList<User>());
     }
 }

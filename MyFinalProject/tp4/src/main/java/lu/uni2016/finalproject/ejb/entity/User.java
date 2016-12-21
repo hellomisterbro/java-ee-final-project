@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class User extends AbstractDBObject {
     private String username;
     private String password;
+    private Car car;
     private boolean adminRole;
 
     @Column(name = "username")
@@ -38,6 +39,16 @@ public class User extends AbstractDBObject {
 
     public void setAdminRole(boolean adminRole) {
         this.adminRole = adminRole;
+    }
+
+    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn(name = "car_id")
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     @Override

@@ -14,8 +14,9 @@
 <b:navBar brand="CarSharingSystem" brandHref="#">
     <b:navbarLinks>
         <b:navLink value="Home" href="home.jsf"></b:navLink>
-        <b:navLink value="Search" href="#"></b:navLink>
+        <b:navLink value="Search" href="search.jsf"></b:navLink>
         <b:navLink value="Settings" href="settings.jsf"></b:navLink>
+        <b:navLink value="Admin Page" href="userCrud.jsf" rendered="#{sessionData.loggedUser.adminRole}"></b:navLink>
         <b:navCommandLink value="Logout" action="#{loginAction.logout}"/>
 
     </b:navbarLinks>

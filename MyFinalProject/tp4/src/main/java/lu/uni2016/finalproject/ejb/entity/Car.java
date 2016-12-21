@@ -21,15 +21,15 @@ public class Car extends AbstractDBObject{
         this.name = name;
     }
 
+
     @Column(name = "places")
-    public int getPlaces() {
+    public Integer getPlaces() {
         return places;
     }
 
-    public void setPlaces(int places) {
+    public void setPlaces(Integer places) {
         this.places = places;
     }
-
 
     @Override
     public boolean equals(Object o) {
