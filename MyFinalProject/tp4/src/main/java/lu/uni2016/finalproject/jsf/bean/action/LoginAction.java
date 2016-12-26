@@ -2,6 +2,7 @@ package lu.uni2016.finalproject.jsf.bean.action;
 
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.io.IOException;
@@ -45,6 +46,17 @@ public class LoginAction {
     public String logout() {
         sessionData.setLoggedUser(null);
         return "/login.xhtml?faces-redirect=true";
+    }
+
+
+    public String checkLogin() throws IOException {
+        if(!sessionData.isLoggedIn()){
+            ExternalContext ec;
+            ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect(ec.getRequestContextPath() + "/login.xhtml");
+            return "/login.xhtml?faces-redirect=true";
+        }
+        return "";
     }
 
 }

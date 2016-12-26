@@ -32,8 +32,7 @@ public class UserCrudBean extends AbstractDBObjectCrudBean<User> {
         return conversation;
     }
 
-    @Override
-    public AbstractDBObjectFacade getFacade() {
+    public AbstractDBObjectFacade getRideFacade() {
         return facade;
     }
 

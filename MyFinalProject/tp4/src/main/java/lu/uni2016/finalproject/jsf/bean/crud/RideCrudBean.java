@@ -1,9 +1,10 @@
 package lu.uni2016.finalproject.jsf.bean.crud;
 
 
-import com.sun.tools.javac.util.List;
+
 import lu.uni2016.finalproject.ejb.entity.User;
 import lu.uni2016.finalproject.ejb.facades.RideFacade;
+import lu.uni2016.finalproject.ejb.facades.UserFacade;
 import lu.uni2016.finalproject.ejb.facades.helper.AbstractDBObjectFacade;
 import lu.uni2016.finalproject.jsf.bean.crud.helper.AbstractDBObjectCrudBean;
 import lu.uni2016.finalproject.ejb.entity.Ride;
@@ -12,10 +13,9 @@ import lu.uni2016.finalproject.jsf.bean.model.SessionData;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.SessionScoped;
+
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
 
 /**
  * Created by kirichek on 12/12/16.
@@ -27,7 +27,9 @@ public class RideCrudBean extends AbstractDBObjectCrudBean<Ride>{
     @Inject
     private Conversation conversation;
     @Inject
-    private RideFacade facade;
+    private RideFacade rideFacade;
+    @Inject
+    private UserFacade userFacade;
     @Inject
     private SessionData sessionData;
 
@@ -39,20 +41,33 @@ public class RideCrudBean extends AbstractDBObjectCrudBean<Ride>{
         return conversation;
     }
 
-    @Override
-    public AbstractDBObjectFacade getFacade() {
-        return facade;
+    public AbstractDBObjectFacade getRideFacade() {
+        return rideFacade;
     }
 
-    @Override
-    public String doSaveEdit() {
+
+    public String setCurrentDriver(){
         entity.setDriver(sessionData.getLoggedUser());
         return super.doSaveEdit();
+    }
+
+    public void addCurrentPassenger(){
+        if(entity.getPassengers().contains(sessionData.getLoggedUser())
+                || entity.getDriver().equals(sessionData.getLoggedUser())
+                || entity.getDriver().getCar().getPlaces() < 1){
+            return;
+        }
+        entity.getPassengers().add(sessionData.getLoggedUser());
+        doSaveEdit();
+    }
+
+    public void removeCurrentPassenger(){
+        entity.getPassengers().remove(sessionData.getLoggedUser());
+        doSaveEdit();
     }
 
     @PostConstruct
     void init(){
         super.startNewEntity();
-//        super.entity.setPassengers(new ArrayList<User>());
     }
 }

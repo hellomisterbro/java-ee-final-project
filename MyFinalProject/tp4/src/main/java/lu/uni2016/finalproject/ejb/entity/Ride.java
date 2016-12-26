@@ -4,7 +4,9 @@ import lu.uni2016.finalproject.ejb.entity.helper.AbstractDBObject;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by kirichek on 12/10/16.
@@ -13,7 +15,7 @@ import java.util.List;
 @Entity
 public class Ride extends AbstractDBObject{
     private User driver;
-    private List<User> passengers;
+    private Set<User> passengers = new HashSet<User>();
     private String startLocation;
     private String endLocation;
     private java.util.Date dateTime;
@@ -59,14 +61,18 @@ public class Ride extends AbstractDBObject{
         this.driver = driver;
     }
 
-//    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-//    public List<User> getPassengers() {
-//        return passengers;
-//    }
-//
-//    public void setPassengers(List<User> passengers) {
-//        this.passengers = passengers;
-//    }
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "Ride_User",
+            joinColumns = { @JoinColumn(name = "ride_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") })
+    public Set<User> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(Set<User> passengers) {
+        this.passengers = passengers;
+    }
 
     @Column(name = "startlocation")
     public String getStartLocation() {
@@ -105,4 +111,12 @@ public class Ride extends AbstractDBObject{
         return result;
     }
 
+    @Transient
+    public String getListPassengers(){
+        StringBuilder listPassengers = new StringBuilder();
+        for (User user:passengers) {
+            listPassengers.append(user.getUsername()+",");
+        }
+        return listPassengers.toString();
+    }
 }

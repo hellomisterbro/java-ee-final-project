@@ -2,8 +2,11 @@ package lu.uni2016.finalproject.jsf.bean.model;
 
 
 import lu.uni2016.finalproject.ejb.entity.Ride;
+import lu.uni2016.finalproject.ejb.facades.RideFacade;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
@@ -15,6 +18,8 @@ import java.util.List;
 @Named
 @ViewScoped
 public class SearchModel implements Serializable {
+    @Inject
+    private RideFacade rideFacade;
 
     private String startpoint;
     private String endpoint;
@@ -42,6 +47,11 @@ public class SearchModel implements Serializable {
 
     public List<Ride> getSearchResult() {
         return searchResult;
+    }
+
+    @PostConstruct
+    void init(){
+        this.setSearchResult(rideFacade.getAllRides());
     }
 }
 

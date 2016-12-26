@@ -11,6 +11,7 @@
         <b:container>
             <!--<f:facet name="footer">-->
                 <h:form id="loginForm">
+                    <f:event type="preRenderView" listener="#{loginAction.checkLogin}" />
                     <b:panel>
                         <b:row>
                             <b:column medium-screen="2">

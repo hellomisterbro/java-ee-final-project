@@ -9,8 +9,12 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
         <b:container>
-            <h:form id="searchForm">
-                <b:panel>
+
+
+            <f:event type="preRenderView" listener="#{loginAction.checkLogin}"/>
+
+            <b:panel>
+                <h:form id="searchForm">
                     <b:row>
                         <b:column medium-screen="2">
                             <h:outputText value="Start point:" for="startpoint"/>
@@ -39,16 +43,16 @@
                     </b:row>
                     <b:row>
                         <b:column span="4" offset="2">
-                            <b:commandButton value="Update" action="#{searchAction.updateSearchResults}" update="@form" look="primary"
-                                             style="width:100%" />
+                            <b:commandButton value="Update" actionListener="#{searchAction.updateSearchResults}"
+                                             look="primary"
+                                             style="width:100%"/>
                         </b:column>
                     </b:row>
-                    <b:dataTable value="#{searchModel.searchResult}" var="ride" searching="false">
-                        <b:panel title="Moscow to Lviv, at 20:12 on 23.09.2014" collapsible="false">
-                            <b:row styleClass="show-grid">
-                                <b:column span="10"><h:outputText value="#{ride.startLocation} to #{ride.endLocation}, at #{ride.dateTime}"/></b:column>
-                            </b:row>
-                            <!--at 20:12 on 23.09.2014-->
+                </h:form>
+                <ui:repeat var="ride" value="#{searchModel.searchResult}" varStatus="status">
+                    <h:form>
+                        <br/><br/><br/>
+                        <b:panel title="#{ride.startLocation} to #{ride.endLocation}, at #{ride.dateTime}" collapsible="false">
                             <b:row styleClass="show-grid">
                                 <b:column span="2"><h:outputText value="Car:"/></b:column>
                                 <b:column span="8"><h:outputText value="#{ride.driver.car.carname}"/></b:column>
@@ -58,17 +62,31 @@
                                 <b:column span="8"><h:outputText value="$#{ride.price}"/></b:column>
                             </b:row>
                             <b:row styleClass="show-grid">
+                                <b:column span="2"><h:outputText value="Passegers:"/></b:column>
+                                <b:column span="8"><h:outputText value="#{ride.listPassengers}"/></b:column>
+                            </b:row>
+                            <b:row styleClass="show-grid">
                                 <b:column span="2"><h:outputText value="Free Places:"/></b:column>
                                 <b:column span="8"><h:outputText value="#{ride.reservedPlaces} of #{ride.driver.car.places}"/></b:column>
                             </b:row>
                             <b:row styleClass="show-grid">
-                                <b:column span="3" offset="11"><b:button value="Join"/></b:column>
+                                <b:column span="2"><h:outputText value="Driver:"/></b:column>
+                                <b:column span="8"><h:outputText value="#{ride.driver.username}"/></b:column>
+                            </b:row>
+                            <b:row styleClass="show-grid">
+                                <b:column span="3" offset="11">
+                                    <b:commandButton value="Join" look="info" action="#{rideCrudBean.addCurrentPassenger}">
+                                        <f:actionListener binding="#{rideCrudBean.startEditEntity(ride)}" />
+                                    </b:commandButton>
+                                </b:column>
                             </b:row>
                         </b:panel>
+                    </h:form>
 
-                    </b:dataTable>
-                </b:panel>
-            </h:form>
+                </ui:repeat>
+
+            </b:panel>
+
         </b:container>
     </ui:define>
 </ui:composition>

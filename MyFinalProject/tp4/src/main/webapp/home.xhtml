@@ -9,6 +9,7 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
         <h:form>
+            <f:event type="preRenderView" listener="#{loginAction.checkLogin}" />
             <b:jumbotron>
                 <b:container>
                     <h1>Hello #{sessionData.loggedUser.username}, begin your trip!</h1>
@@ -97,7 +98,7 @@
                         <b:column span="4" offset="5">
                             <!--action=""-->
 
-                            <b:commandButton value="Update" action="#{rideCrudBean.doSaveEdit}"
+                            <b:commandButton value="Update" action="#{rideCrudBean.setCurrentDriver}"
                                              look="primary"
                                              style="width:100%"><f:ajax execute="@form" render="@form"/></b:commandButton>
 
@@ -111,46 +112,84 @@
 
         <b:container>
             <b:tabView activeIndex="0">
+                <b:tab title="Joined">
+
+                    <p>Here you can see rides created by you.</p>
+                    <ui:repeat var="ride" value="#{searchAction.userJoinedRide}" varStatus="status">
+                        <br/>
+                        <h:form>
+                            <b:panel title="#{ride.startLocation} to #{ride.endLocation}, at #{ride.dateTime}" collapsible="false">
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2"><h:outputText value="Car:"/></b:column>
+                                    <b:column span="8"><h:outputText value="#{ride.driver.car.carname}"/></b:column>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2"><h:outputText value="Price:"/></b:column>
+                                    <b:column span="8"><h:outputText value="$#{ride.price}"/></b:column>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2"><h:outputText value="Passegers:"/></b:column>
+                                    <b:column span="8"><h:outputText value="#{ride.listPassengers}"/></b:column>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2"><h:outputText value="Free Places:"/></b:column>
+                                    <b:column span="8"><h:outputText value="#{ride.reservedPlaces} of #{ride.driver.car.places}"/></b:column>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2"><h:outputText value="Driver:"/></b:column>
+                                    <b:column span="8"><h:outputText value="#{ride.driver.username}"/></b:column>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="3" offset="11">
+                                        <b:commandButton value="Cancel" look="info" action="#{rideCrudBean.removeCurrentPassenger}">
+                                            <f:actionListener binding="#{rideCrudBean.startEditEntity(ride)}" />
+                                        </b:commandButton>
+                                    </b:column>
+                                </b:row>
+                            </b:panel>
+                        </h:form>
+
+                    </ui:repeat>
+                </b:tab>
                 <b:tab title="Created">
                     <p>Here you can see rides created by you.</p>
-                    <b:panel title="Moscow to Lviv, at 20:12 on 23.09.2014" collapsible="false">
-                        <b:row styleClass="show-grid">
-                            <b:column span="2"><h:outputText value="Car:"/></b:column>
-                            <b:column span="8"><h:outputText value="Toyota"/></b:column>
-                        </b:row>
-                        <b:row styleClass="show-grid">
-                            <b:column span="2"><h:outputText value="Passegers:"/></b:column>
-                            <b:column span="8"><h:outputText value="Nikita, tolik, bolik"/></b:column>
-                        </b:row>
-                        <b:row styleClass="show-grid">
-                            <b:column span="2"><h:outputText value="Free Places:"/></b:column>
-                            <b:column span="8"><h:outputText value="2 of 5"/></b:column>
-                        </b:row>
-                        <b:row styleClass="show-grid">
-                            <b:column span="3" offset="11"><b:button look="danger" value="Cancel"/></b:column>
-                        </b:row>
-                    </b:panel>
+                    <ui:repeat var="ride" value="#{searchAction.userCreatedRides}" varStatus="status">
+                        <br/>
+                        <h:form>
+                            <b:panel title="#{ride.startLocation} to #{ride.endLocation}, at #{ride.dateTime}" collapsible="false">
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2"><h:outputText value="Car:"/></b:column>
+                                    <b:column span="8"><h:outputText value="#{ride.driver.car.carname}"/></b:column>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2"><h:outputText value="Price:"/></b:column>
+                                    <b:column span="8"><h:outputText value="$#{ride.price}"/></b:column>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2"><h:outputText value="Passegers:"/></b:column>
+                                    <b:column span="8"><h:outputText value="#{ride.listPassengers}"/></b:column>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2"><h:outputText value="Free Places:"/></b:column>
+                                    <b:column span="8"><h:outputText value="#{ride.reservedPlaces} of #{ride.driver.car.places}"/></b:column>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2"><h:outputText value="Driver:"/></b:column>
+                                    <b:column span="8"><h:outputText value="#{ride.driver.username}"/></b:column>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="3" offset="11">
+                                        <b:commandButton value="Cancel" look="info" action="#{rideCrudBean.doDelete}">
+                                            <f:actionListener binding="#{rideCrudBean.startDelete(ride)}" />
+                                        </b:commandButton>
+                                    </b:column>
+                                </b:row>
+                            </b:panel>
+                        </h:form>
+
+                    </ui:repeat>
                 </b:tab>
-                <b:tab title="Joined">
-                    <p>Here you can see rides you joined.</p>
-                    <b:panel title="Moscow to Lviv, at 20:12 on 23.09.2014" collapsible="false">
-                        <b:row styleClass="show-grid">
-                            <b:column span="2"><h:outputText value="Car:"/></b:column>
-                            <b:column span="8"><h:outputText value="Toyota"/></b:column>
-                        </b:row>
-                        <b:row styleClass="show-grid">
-                            <b:column span="2"><h:outputText value="Passegers:"/></b:column>
-                            <b:column span="8"><h:outputText value="Nikita, tolik, bolik"/></b:column>
-                        </b:row>
-                        <b:row styleClass="show-grid">
-                            <b:column span="2"><h:outputText value="Free Places:"/></b:column>
-                            <b:column span="8"><h:outputText value="2 of 5"/></b:column>
-                        </b:row>
-                        <b:row styleClass="show-grid">
-                            <b:column span="3" offset="11"><b:button look="danger" value="Cancel"/></b:column>
-                        </b:row>
-                    </b:panel>
-                </b:tab>
+
             </b:tabView>
         </b:container>
     </ui:define>

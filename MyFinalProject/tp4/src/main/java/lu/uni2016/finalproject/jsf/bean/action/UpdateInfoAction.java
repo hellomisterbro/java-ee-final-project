@@ -54,7 +54,7 @@ public class UpdateInfoAction implements Serializable {
         if (userCopy.getCar() == null) {
             Car newCar = new Car();
             newCar.setPlaces(new Integer(4));
-            newCar.setCarname("lolitaas");
+            newCar.setCarname("My New Car");
             userCopy.setCar(newCar);
         }
         updateInfoModel.setCar(userCopy.getCar());

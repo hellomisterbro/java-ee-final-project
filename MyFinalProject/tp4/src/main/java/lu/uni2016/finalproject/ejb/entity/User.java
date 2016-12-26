@@ -3,6 +3,8 @@ package lu.uni2016.finalproject.ejb.entity;
 import lu.uni2016.finalproject.ejb.entity.helper.AbstractDBObject;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by kirichek on 12/10/16.
@@ -13,6 +15,7 @@ public class User extends AbstractDBObject {
     private String password;
     private Car car;
     private boolean adminRole;
+    private Set<Ride> rides = new HashSet<Ride>();
 
     @Column(name = "username")
     public String getUsername() {
@@ -49,6 +52,15 @@ public class User extends AbstractDBObject {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    @ManyToMany(cascade=CascadeType.ALL,mappedBy = "passengers")
+    public Set<Ride> getRides() {
+        return rides;
+    }
+
+    public void setRides(Set<Ride> rides) {
+        this.rides = rides;
     }
 
     @Override

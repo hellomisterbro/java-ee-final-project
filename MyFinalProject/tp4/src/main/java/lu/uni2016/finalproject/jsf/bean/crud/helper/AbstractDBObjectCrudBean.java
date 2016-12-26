@@ -17,7 +17,7 @@ public abstract class AbstractDBObjectCrudBean<T extends AbstractDBObject> imple
 
     public abstract Conversation getConversation();
 
-    public abstract AbstractDBObjectFacade getFacade();
+    public abstract AbstractDBObjectFacade getRideFacade();
 
     public String startNewEntity() {
         if (getConversation().isTransient()) getConversation().begin();
@@ -40,7 +40,7 @@ public abstract class AbstractDBObjectCrudBean<T extends AbstractDBObject> imple
     }
 
     public String doSaveEdit() {
-        entity = (T) getFacade().saveOrUpdate(entity);
+        entity = (T) getRideFacade().saveOrUpdate(entity);
         endConversation();
         startNewEntity();
         return null;
@@ -54,7 +54,7 @@ public abstract class AbstractDBObjectCrudBean<T extends AbstractDBObject> imple
     }
 
     public String doDelete() {
-        getFacade().delete(entity);
+        getRideFacade().delete(entity);
         endConversation();
         return null;
     }
