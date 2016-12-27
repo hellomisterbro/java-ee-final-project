@@ -16,6 +16,7 @@ public class ApplicationConfig extends Application {
     public Set<Class<?>> getClasses() {
         return new HashSet<Class<?>>(Arrays.asList(
                 HelloWorldRestService.class,
-                UserRestService.class));
+                UserRestService.class,
+                RideRestService.class));
     }
 }

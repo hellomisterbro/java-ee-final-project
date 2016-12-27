@@ -1,8 +1,5 @@
 package lu.uni2016.finalproject.jsf.bean.crud;
 
-
-
-import lu.uni2016.finalproject.ejb.entity.User;
 import lu.uni2016.finalproject.ejb.facades.RideFacade;
 import lu.uni2016.finalproject.ejb.facades.UserFacade;
 import lu.uni2016.finalproject.ejb.facades.helper.AbstractDBObjectFacade;
